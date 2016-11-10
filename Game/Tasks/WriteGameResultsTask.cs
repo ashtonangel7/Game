@@ -3,25 +3,22 @@
     using Common.DataFlows.Game;
     using Common.Records;
 
-    public class GetNewGameTask
+    public class WriteGameResultsTask
     {
         private readonly NumbersGameDataFlow _numbersGameDataFlow;
 
-        public GetNewGameTask(NumbersGameDataFlow numbersGameDataFlow)
+        public WriteGameResultsTask(NumbersGameDataFlow numbersGameDataFlow)
         {
             _numbersGameDataFlow = numbersGameDataFlow;
         }
 
         internal bool Run(ref NumbersGame newNumbersGame)
         {
-            //Get Game Parameters
-            if(!_numbersGameDataFlow.ExecuteDataFlowReader())
+            if (!_numbersGameDataFlow.ExecuteDataFlowWriter())
             {
                 return false;
             }
 
-            newNumbersGame = new NumbersGame(999, 10, 5);
-            newNumbersGame.SetupNewGame();
             return true;
         }
     }

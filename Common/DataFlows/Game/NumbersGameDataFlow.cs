@@ -1,15 +1,30 @@
 ﻿namespace Common.DataFlows.Game
 {
+    using Connectors;
+    using DataFlowReader;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     public class NumbersGameDataFlow
     {
-        public NumbersGameDataFlow(string gameUri)
+        private readonly GameReader _gameReader;
+
+        public NumbersGameDataFlow(string gameUri, int timeoutMilliseconds)
         {
-            
+            _gameReader = new GameReader(gameUri, timeoutMilliseconds);
+        }
+
+        public bool ExecuteDataFlowReader()
+        {
+            if (!_gameReader.ExecuteReader())
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool ExecuteDataFlowWriter()
+        {
+            return true;
         }
     }
 }

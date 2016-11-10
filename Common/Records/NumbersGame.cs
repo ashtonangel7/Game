@@ -4,11 +4,43 @@
     using System.Collections.Generic;
     public class NumbersGame
     {
-        private List<int> _childrenInGame = new List<int>();
         private readonly int _numberOfChildren;
         private readonly int _gameRoundLength;
+        private readonly List<int> _childrenInGame;
+        private readonly List<int> _childrenEliminated;
+        private readonly int _gameId;
+        private int _winner;
 
-        public NumbersGame(int numberOfChildren, int gameRoundLength)
+        public int Winner
+        {
+            get
+            {
+                return _winner;
+            }
+
+            private set
+            {
+                _winner = value;
+            }
+        }
+
+        public List<int> ChildrenEliminated
+        {
+            get
+            {
+                return _childrenEliminated;
+            }
+        }
+
+        public int GameId
+        {
+            get
+            {
+                return _gameId;
+            }
+        }
+
+        public NumbersGame(int gameId,int numberOfChildren, int gameRoundLength)
         {
             if (numberOfChildren < 1)
             {
@@ -22,8 +54,12 @@
                         " in the game. Value = " + gameRoundLength);
             }
 
+            _childrenInGame = new List<int>();
+            _childrenEliminated = new List<int>();
+
             _numberOfChildren = numberOfChildren;
             _gameRoundLength = gameRoundLength;
+            _gameId = gameId;
         }
 
         public void SetupNewGame()
@@ -37,7 +73,7 @@
 
         }
 
-        public int Play()
+        public bool Play()
         {
             int currentChildIndex = 0;
             int quotient = 0;
@@ -50,13 +86,15 @@
                 modulus = _gameRoundLength % _childrenInGame.Count;
                 removeChildAtIndex = Math.Abs(currentChildIndex + (modulus - 1));
                 removeChildAtIndex = removeChildAtIndex >= _childrenInGame.Count ? 0 : removeChildAtIndex;
-                Console.WriteLine(_childrenInGame[removeChildAtIndex]);
+                _childrenEliminated.Add(_childrenInGame[removeChildAtIndex]);
                 _childrenInGame.RemoveAt(removeChildAtIndex);
                 currentChildIndex = removeChildAtIndex;
 
             } while (_childrenInGame.Count > 1);
 
-            return _childrenInGame[0];
+
+            _winner = _childrenInGame[0];
+            return true;
         }
     }
 }
