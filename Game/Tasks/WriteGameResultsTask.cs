@@ -2,6 +2,8 @@
 {
     using Common.DataFlows.Game;
     using Common.Records;
+    using Common.Records.DataFlows.DataFlowWriteRecord;
+    using System;
 
     public class WriteGameResultsTask
     {
@@ -12,12 +14,17 @@
             _numbersGameDataFlow = numbersGameDataFlow;
         }
 
-        internal bool Run(ref NumbersGame newNumbersGame)
+        internal bool Run(ref NumbersGame newNumbersGame, out string message)
         {
-            if (!_numbersGameDataFlow.ExecuteDataFlowWriter())
+            NumbersGameWriteResponseRecord responseRecord = null;
+
+            if (!_numbersGameDataFlow.ExecuteDataFlowWriter(newNumbersGame, out responseRecord, out message))
             {
                 return false;
             }
+
+            message = string.Format("Game {0} finished with a message of : {1}.", responseRecord.id,
+                responseRecord.message);
 
             return true;
         }

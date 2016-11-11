@@ -14,29 +14,32 @@
 
         public GameBehaviour()
         {
-            _numbersGameDataFlow = new NumbersGameDataFlow(Settings.Default.GameUri, 100000);
+            _numbersGameDataFlow = new NumbersGameDataFlow(Settings.Default.GameUri, Settings.Default.WebApiTimeout);
 
             _getNewGameTask = new GetNewGameTask(_numbersGameDataFlow);
             _playGameTask = new PlayGameTask();
             _writeGameResultsTask = new WriteGameResultsTask(_numbersGameDataFlow);
         }
 
-        public bool PlayNewGame()
+        public bool PlayNewGame(out string message)
         {
             NumbersGame newNumbersGame = null;
 
-            if (!_getNewGameTask.Run(ref newNumbersGame))
+            if (!_getNewGameTask.Run(ref newNumbersGame, out message))
             {
+                message = "Error encountered in Game Workflow, getNewGameTask step : " + message;
                 return false;
             }
 
-            if (!_playGameTask.Run(ref newNumbersGame))
+            if (!_playGameTask.Run(ref newNumbersGame, out message))
             {
+                message = "Error encountered in Game Workflow, playGameTask step : " + message;
                 return false;
             }
 
-            if (!_writeGameResultsTask.Run(ref newNumbersGame))
+            if (!_writeGameResultsTask.Run(ref newNumbersGame, out message))
             {
+                message = "Error encountered in Game Workflow, writeGameResultsTask step : " + message;
                 return false;
             }
 

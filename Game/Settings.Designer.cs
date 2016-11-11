@@ -31,5 +31,14 @@ namespace Game {
                 return ((string)(this["GameUri"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("300000")]
+        public int WebApiTimeout {
+            get {
+                return ((int)(this["WebApiTimeout"]));
+            }
+        }
     }
 }

@@ -4,12 +4,21 @@
 
     public class PlayGameTask
     {
-        internal bool Run(ref NumbersGame newNumbersGame)
+        internal bool Run(ref NumbersGame newNumbersGame, out string message)
         {
-            if (!newNumbersGame.Play())
+            if (newNumbersGame == null)
             {
+                message = "No valid game object passed into PlayGameTask step.";
                 return false;
             }
+
+            if (!newNumbersGame.Play(out message))
+            {
+                message = "Error in Play Game Task Step : " + message;
+                return false;
+            }
+
+            message = string.Empty;
             return true; 
         }
     }

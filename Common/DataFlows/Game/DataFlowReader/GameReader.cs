@@ -1,11 +1,7 @@
 ﻿namespace Common.DataFlows.Game.DataFlowReader
 {
     using Connectors;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Records.DataFlows.DataFlowReadRecord;
 
     public class GameReader
     {
@@ -16,9 +12,9 @@
             _webApiConnector = new WebApiConnector(gameUri, timeoutMilliseconds);
         }
 
-        internal bool ExecuteReader()
+        internal bool ExecuteReader(out NumbersGameReadRecord numbersGameReadRecord,out string message)
         {
-            if (!_webApiConnector.DoGet())
+            if (!_webApiConnector.DoGet<NumbersGameReadRecord>(out numbersGameReadRecord, out message))
             {
                 return false;
             }
