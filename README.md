@@ -13,3 +13,4 @@
  * I implemented a uniform exception handling strategy.
 * Explain any assumptions or trade-offs you have made.
  * The requirement of moving to the next child after one has been removed is not clear, would have clarified ths requiremnt first in practice. Should we remove the one to the right or the left. I moved right in each case because we are working clockwise.
+ * JSON data in this case is not a very strong contract because it does not explicityly declare the object types for example the service may send us a long for gameid.
