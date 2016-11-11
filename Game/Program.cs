@@ -1,18 +1,48 @@
-﻿using System;
-
-namespace Game
+﻿namespace Game
 {
+    using System;
     class Program
     {
         static void Main(string[] args)
         {
-            GameBehaviour gameBehaviour = new GameBehaviour();
+            GameBehaviourWorkflow gameBehaviourWorkFlow;
+
+            try
+            {
+                gameBehaviourWorkFlow = new GameBehaviourWorkflow();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Error setting up Game Behaviour Workflow. Message = " + ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine(ex.InnerException.Message);
+                    Console.WriteLine(ex.InnerException.StackTrace);
+                }
+                return;
+            }
 
             string message;
 
-            if (!gameBehaviour.PlayNewGame(out message))
+            //Catch an unhandled exception.
+            try
             {
-                Console.WriteLine("Error in PlayNewGame : "+ message);
+                if (!gameBehaviourWorkFlow.PlayNewGame(out message))
+                {
+                    Console.WriteLine("Error in PlayNewGame : " + message);
+                }
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Unhandled Exception in Game Behaviour Workflow. Message = " + ex.Message);
+                Console.WriteLine(ex.StackTrace);
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine(ex.InnerException.Message);
+                    Console.WriteLine(ex.InnerException.StackTrace);
+                }
+                return;
             }
 
             Console.WriteLine(message);

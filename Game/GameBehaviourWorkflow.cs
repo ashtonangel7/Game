@@ -4,7 +4,7 @@
     using Common.Records;
     using Tasks;
 
-    public class GameBehaviour
+    public class GameBehaviourWorkflow
     {
         private readonly NumbersGameDataFlow _numbersGameDataFlow;
 
@@ -12,7 +12,7 @@
         private readonly GetNewGameTask _getNewGameTask;
         private readonly WriteGameResultsTask _writeGameResultsTask;
 
-        public GameBehaviour()
+        public GameBehaviourWorkflow()
         {
             _numbersGameDataFlow = new NumbersGameDataFlow(Settings.Default.GameUri, Settings.Default.WebApiTimeout);
 

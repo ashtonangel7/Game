@@ -4,6 +4,9 @@
     using System.Net.Http;
     using System.Threading.Tasks;
 
+    /// <summary>
+    /// Basic Web Api beginnings of a library, currently supporting two Synchronous methods get and post.
+    /// </summary>
     public class WebApiConnector
     {
         private static readonly HttpClient _httpClient = new HttpClient();
@@ -13,10 +16,28 @@
 
         public WebApiConnector(string baseAddress, int timeoutMilliseconds)
         {
+            if (string.IsNullOrWhiteSpace(baseAddress))
+            {
+                throw new ArgumentException("Base address cannot be null or empty, WebApiConnector.");
+            }
+
+            if (timeoutMilliseconds <= 0)
+            {
+                throw new ArgumentException("Timeout cannot be zero or lower, WebApiConnector.");
+            }
+
             _baseAddress = baseAddress;
             _timeoutMilliseconds = timeoutMilliseconds;
-            _httpClient.BaseAddress = new Uri(_baseAddress);
-            _httpClient.Timeout = new TimeSpan(0, 0, 0, 0, _timeoutMilliseconds);
+
+            try
+            {
+                _httpClient.BaseAddress = new Uri(_baseAddress);
+                _httpClient.Timeout = new TimeSpan(0, 0, 0, 0, _timeoutMilliseconds);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Failed to set the base address or timeout for http client in WebApiConnector, see inner exception.", ex);   
+            } 
         }
 
         public bool DoGet<T>(out T responseObject, out string message)
@@ -58,7 +79,7 @@
             return readRecord;
         }
 
-        internal bool DoPost<T,R>(T writeObject, string parameters, out R responseRecord, out string message)
+        public bool DoPost<T,R>(T writeObject, string parameters, out R responseRecord, out string message)
         {
             string fullUri = _baseAddress + parameters;
 
