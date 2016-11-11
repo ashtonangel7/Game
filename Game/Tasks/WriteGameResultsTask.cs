@@ -3,7 +3,6 @@
     using Common.DataFlows.Game;
     using Common.Records;
     using Common.Records.DataFlows.DataFlowWriteRecord;
-    using System;
 
     public class WriteGameResultsTask
     {
