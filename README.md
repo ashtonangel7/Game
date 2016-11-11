@@ -6,7 +6,10 @@
   * Threading is kept well under control in this structure.
 
 * Use as little memory as possible and make it run as fast as possible.
-  * [Premature optimization is the root of all evil in programming.](http://www.comp.nus.edu.sg/~damithch/pages/SE-quotes.htm?type=bestQuotes)
-* In your comments, discuss the runtime order complexity of your solution e.g., O(n) or O(n^2), etc.	
+  * [Premature optimization is the root of all evil in programming. C.A.R. Hoare](http://www.comp.nus.edu.sg/~damithch/pages/SE-quotes.htm?type=bestQuotes)
+* In your comments, discuss the runtime order complexity of your solution e.g., O(n) or O(n^2), etc.
+  * O(count of children)
 * Comment on resiliency.
+ * I implemented a uniform exception handling strategy.
 * Explain any assumptions or trade-offs you have made.
+ * The requirement of moving to the next child after one has been removed is not clear, would have clarified ths requiremnt first in practice. Should we remove the one to the right or the left. I moved right in each case because we are working clockwise.
