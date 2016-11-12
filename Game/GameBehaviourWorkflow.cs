@@ -14,6 +14,7 @@
 
         public GameBehaviourWorkflow()
         {
+            //TODO: Ideally these and other settings would come in through a Configuration class in common with a base class calling a configuration dataflow.
             _numbersGameDataFlow = new NumbersGameDataFlow(Settings.Default.GameUri, Settings.Default.WebApiTimeout);
 
             _getNewGameTask = new GetNewGameTask(_numbersGameDataFlow);

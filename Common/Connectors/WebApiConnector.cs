@@ -5,7 +5,8 @@
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Basic Web Api beginnings of a library, currently supporting two Synchronous methods get and post.
+    /// Basic Web Api beginnings of a library, currently supporting two methods get and post.
+    /// TODO:Implemt all methods get, post ,put ...
     /// </summary>
     public class WebApiConnector
     {

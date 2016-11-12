@@ -3,7 +3,12 @@
     using System;
     class Program
     {
-        static void Main(string[] args)
+        /// <summary>
+        /// Main entry point, to run the GameBehaviourWorkflow.
+        /// Note: just using a console app here to demonstrate the principle.
+        /// TODO: We could implement a common logging dataflow to email slack etc..
+        /// </summary>
+        static void Main()
         {
             GameBehaviourWorkflow gameBehaviourWorkFlow;
 

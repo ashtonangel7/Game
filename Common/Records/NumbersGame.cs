@@ -40,6 +40,15 @@
             }
         }
 
+        /// <summary>
+        /// Main Game Constructor for the childrens game.
+        /// Children are eliminated from the game in a clockwise direction from 1.
+        /// The winner is the last child left in the game.
+        /// Note : You must call SetupNewGame to use this class.
+        /// </summary>
+        /// <param name="gameId">The Unique Game identifier.</param>
+        /// <param name="numberOfChildren">The number of children in the game.</param>
+        /// <param name="gameRoundLength">The count interval at which each child leaves the game.</param>
         public NumbersGame(int gameId, int numberOfChildren, int gameRoundLength)
         {
             if (gameId < 0)
@@ -78,10 +87,20 @@
 
         public bool Play(out string message)
         {
+
+            if(_childrenInGame.Count < 1)
+            {
+                message = "The game has not been setup correctly, please call SetupNewGame first.";
+                return false;
+            }
+
             int currentChildIndex = 0;
             int quotient = 0;
             int modulus = 0;
             int removeChildAtIndex = 0;
+
+            int expectedIterations = _childrenInGame.Count - 1;
+            int loopIterations = 0;
 
             try
             {
@@ -94,8 +113,9 @@
                     _childrenEliminated.Add(_childrenInGame[removeChildAtIndex]);
                     _childrenInGame.RemoveAt(removeChildAtIndex);
                     currentChildIndex = removeChildAtIndex;
+                    loopIterations++;
 
-                } while (_childrenInGame.Count > 1);
+                } while (_childrenInGame.Count > 1 && loopIterations <= expectedIterations);
 
 
                 _winner = _childrenInGame[0];
